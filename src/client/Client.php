@@ -1,6 +1,9 @@
 <?php
 
-namespace rpcClient\client;
+namespace jsonRpc\client;
+
+use \SensioLabs\Consul\Services\HealthInterface;
+use \SensioLabs\Consul\ServiceFactory;
 
 class Client
 {
@@ -14,7 +17,7 @@ class Client
     public function __construct(string $host,int $port)
     {
         $opt = ["base_uri"=>"http://{$host}:{$port}"];
-        $this->consul = new \SensioLabs\Consul\ServiceFactory($opt);
+        $this->consul = new ServiceFactory($opt);
     }
 
     /**
@@ -25,9 +28,9 @@ class Client
     public function findService($name,$tag=null)
     {
         /**
-         * @var $health \SensioLabs\Consul\Services\HealthInterface
+         * @var $health HealthInterface
          */
-        $health = $this->consul->get(\SensioLabs\Consul\Services\HealthInterface::class);
+        $health = $this->consul->get(HealthInterface::class);
         $opt = ["passing"=>1];
         if ($tag) {
             $opt["tag"] = $tag;

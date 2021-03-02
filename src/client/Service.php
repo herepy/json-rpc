@@ -1,6 +1,6 @@
 <?php
 
-namespace rpcClient\client;
+namespace jsonRpc\client;
 
 class Service
 {

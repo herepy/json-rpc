@@ -12,9 +12,9 @@ class ComposerStaticInitb6ce477c8a7d17de37c6a23a0d56a84f
     );
 
     public static $prefixLengthsPsr4 = array (
-        'r' => 
+        'j' => 
         array (
-            'rpcClient\\' => 10,
+            'jsonRpc\\' => 8,
         ),
         'S' => 
         array (
@@ -33,7 +33,7 @@ class ComposerStaticInitb6ce477c8a7d17de37c6a23a0d56a84f
     );
 
     public static $prefixDirsPsr4 = array (
-        'rpcClient\\' => 
+        'jsonRpc\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

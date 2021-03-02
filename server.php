@@ -1,16 +1,14 @@
 <?php
+require_once "vendor/autoload.php";
 
-$socket = socket_create_listen(8081);
-
-while (true) {
-    $conn = socket_accept($socket);
-    echo "get connect".PHP_EOL;
-    $str = socket_read($conn, 1024);
-    echo $str.PHP_EOL;
-
-    $data = json_decode($str, true);
-    $result = ["id"=>$data["id"],"result"=>rand(0,9),"err"=>null];
-    $result = json_encode($result);
-    socket_write($conn,$result,strlen($result));
-    socket_close($conn);
+class Person
+{
+    public function say($name)
+    {
+        return "hello ".$name;
+    }
 }
+
+$server = new \jsonRpc\server\Server("10.90.10.222",8500);
+$server->registerService(new Person(),"person");
+//$server->deregisterService("person000000005dc0ecc9000000006be98ee5");
