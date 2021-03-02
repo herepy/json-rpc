@@ -1,0 +1,87 @@
+[
+    {
+        "Node": {
+            "ID": "b619226e-a2cd-bfe0-80b8-6da6dbc3f8fd",
+            "Node": "ubuntu-xenial",
+            "Address": "127.0.0.1",
+            "Datacenter": "dc1",
+            "TaggedAddresses": {
+                "lan": "127.0.0.1",
+                "lan_ipv4": "127.0.0.1",
+                "wan": "127.0.0.1",
+                "wan_ipv4": "127.0.0.1"
+            },
+            "Meta": {
+                "consul-network-segment": ""
+            },
+            "CreateIndex": 11,
+            "ModifyIndex": 13
+        },
+        "Service": {
+            "ID": "user_1",
+            "Service": "user",
+            "Tags": [
+                "user"
+            ],
+            "Address": "10.90.10.111",
+            "TaggedAddresses": {
+                "lan_ipv4": {
+                    "Address": "10.90.10.111",
+                    "Port": 8081
+                },
+                "wan_ipv4": {
+                    "Address": "10.90.10.111",
+                    "Port": 8081
+                }
+            },
+            "Meta": null,
+            "Port": 8081,
+            "Weights": {
+                "Passing": 1,
+                "Warning": 1
+            },
+            "EnableTagOverride": false,
+            "Proxy": {
+                "MeshGateway": {},
+                "Expose": {}
+            },
+            "Connect": {},
+            "CreateIndex": 15,
+            "ModifyIndex": 15
+        },
+        "Checks": [
+            {
+                "Node": "ubuntu-xenial",
+                "CheckID": "serfHealth",
+                "Name": "Serf Health Status",
+                "Status": "passing",
+                "Notes": "",
+                "Output": "Agent alive and reachable",
+                "ServiceID": "",
+                "ServiceName": "",
+                "ServiceTags": [],
+                "Type": "",
+                "Definition": {},
+                "CreateIndex": 11,
+                "ModifyIndex": 11
+            },
+            {
+                "Node": "ubuntu-xenial",
+                "CheckID": "user_check_1",
+                "Name": "user_check",
+                "Status": "passing",
+                "Notes": "",
+                "Output": "TCP connect 10.90.10.111:8081: Success",
+                "ServiceID": "user_1",
+                "ServiceName": "user",
+                "ServiceTags": [
+                    "user"
+                ],
+                "Type": "tcp",
+                "Definition": {},
+                "CreateIndex": 15,
+                "ModifyIndex": 16
+            }
+        ]
+    }
+]
