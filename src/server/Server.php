@@ -20,7 +20,6 @@ class Server
      * @var Agent
      */
     protected $agent;
-    protected $nameToService = [];
 
     /**
      * Client constructor.
@@ -34,31 +33,43 @@ class Server
         $this->agent = $factory->get(AgentInterface::class);
     }
 
-    public function registerService(object $obj,string $name, array $tags = [])
+    public function registerService(array $params)
     {
-        if (isset($this->nameToService[$name])) {
-            return;
+        if (!$params) {
+            throw new \RuntimeException("params cat not be empty");
+        }
+        $params = array_change_key_case($params);
+
+        if (!isset($params["name"]) || !isset($params["address"]) || !isset($params["port"])) {
+            throw new \RuntimeException("name,address and port is required");
         }
 
-        $serviceId = $name."_".spl_object_hash($obj);
+        $defaultCheck = [
+            "Tcp"       => $params["address"].":".$params["port"],
+            "Interval"  => "15s",
+            "Timeout"   => "2s"
+        ];
+
+        $serviceId = isset($params["id"]) ? $params["id"] : $params["name"]."_".gethostname();
+        $check = isset($params["check"]) ? $params["check"] : $defaultCheck;
         $params = [
-            "Id"    =>  $serviceId,
-            "Name"  => $name,
-            "Tags"  => $tags,
-            "Address"=> "10.90.10.222", //todo 从配置文件读取
-            "Port"=> 8888,
+            "Id"        =>  $serviceId,
+            "Name"      =>  $params["name"],
+            "Tags"      =>  isset($params["tag"]) ? $params["tag"] : [],
+            "Address"   =>  $params["address"],
+            "Port"      =>  $params["port"],
             "EnableTagOverride"=> false,
-            "Check"=> [
-                "Tcp"=> "10.90.10.222:8888",
-                "Interval"=> "10s",
-                "Timeout"=> "2s"
-            ]
+            "Check"     =>  $check
         ];
 
         /**
          * @var $response ConsulResponse
          */
         $response = $this->agent->registerService($params);
+        if ($response->getStatusCode() != 200) {
+            return false;
+        }
+
         return $serviceId;
     }
 
@@ -66,4 +77,5 @@ class Server
     {
         $this->agent->deregisterService($serviceId);
     }
+
 }
