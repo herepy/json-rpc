@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     '0d59ee240a4cd96ddbb4ff164fccea4d' => $vendorDir . '/symfony/polyfill-php73/bootstrap.php',
     'a4a119a56e50fbb293281d9a48007e0e' => $vendorDir . '/symfony/polyfill-php80/bootstrap.php',
+    'c1d65fafd3062dd3954f03cafce2d912' => $baseDir . '/src/helper.php',
 );

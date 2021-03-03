@@ -17,7 +17,7 @@ class Service
 
     protected function connect()
     {
-        $service = $this->getService();
+        $service = $this->getOne();
         $host = $service["Service"]["Address"];
         $port = $service["Service"]["Port"];
 
@@ -37,12 +37,7 @@ class Service
             $this->connect();
         }
 
-        $data = [
-            "id"    =>  microtime(true) * 1000,
-            "method"=>  $method,
-            "params"=>  [$params]
-        ];
-        $data = json_encode($data);
+        $data = encode($method, $params);
 
         if (socket_write($this->conn, $data, strlen($data)) === false) {
             $this->err = socket_strerror(socket_last_error($this->conn));
@@ -58,13 +53,18 @@ class Service
         return $result;
     }
 
-    public function getService()
+    public function getOne()
     {
         if (count($this->list) == 0) {
             throw new \RuntimeException("service list is empty, please try to find service");
         }
 
         return $this->list[array_rand($this->list)];
+    }
+
+    public function all()
+    {
+        return $this->list;
     }
 
     public function getError()
