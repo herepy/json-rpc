@@ -7,10 +7,10 @@
 
 /**
  * @param string $method
- * @param array $params
+ * @param string|array $params
  * @return false|string
  */
-function encode(string $method, array $params)
+function encode(string $method, $params)
 {
     $data = [
         "id"    =>  microtime(true) * 1000,
