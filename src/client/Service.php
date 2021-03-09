@@ -50,7 +50,7 @@ class Service
             return false;
         }
 
-        return $result;
+        return decode($result);
     }
 
     public function getOne()
